@@ -1,3 +1,4 @@
+# 所有镜像全部换成了自己的阿里云镜像仓库
 # kube-prometheus
 
 > Note that everything is experimental and may change significantly at any time.
