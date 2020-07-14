@@ -1388,3 +1388,11 @@ spec:
       for: 10m
       labels:
         severity: warning
+    - alert: pod-status
+        annotations:
+          message: vv test pod-status
+        expr: |
+          kube_pod_container_status_running != 1
+        for: 1m
+        labels:
+          severity: warning
