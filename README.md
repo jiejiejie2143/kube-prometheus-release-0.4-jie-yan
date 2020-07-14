@@ -1,4 +1,39 @@
 # 所有镜像全部换成了自己的阿里云镜像仓库
+# 更改记录
+alertmanager-secret.yaml
+```
+stringData:
+  alertmanager.yaml: |-
+    global:
+      resolve_timeout: 1m # 处理超时时间
+      smtp_smarthost: 'smtpdm.aliyun.com:465' # 邮箱smtp服务器代理
+      smtp_from: 'kubenetes<kubenetes@mail.XXX.com>' # 发送邮箱名称
+      smtp_auth_username: 'gerrit@mail.XXX.com' # 邮箱名称
+      smtp_auth_password: 'XXXXX' # 授权密码
+      smtp_require_tls: false # 不开启tls 默认开启
+
+    receivers:
+    - name: Default
+      email_configs: # 邮箱配置
+      - to: "375184726@qq.com" # 接收警报的email配置
+
+    route:
+      group_interval: 1m # 在发送新警报前的等待时间
+      group_wait: 10s # 最初即第一次等待多久时间发送一组警报的通知
+      receiver: Default
+      repeat_interval: 1m # 发送重复警报的周期
+```
+prometheus-rules.yaml
+```
+    - alert: pod-status
+        annotations:
+          message: vv test pod-status
+        expr: |
+          kube_pod_container_status_running != 1
+        for: 1m
+        labels:
+          severity: warning
+```
 # kube-prometheus
 
 > Note that everything is experimental and may change significantly at any time.
